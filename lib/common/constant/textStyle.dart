@@ -53,4 +53,10 @@ class CustomTextStyle {
     fontWeight: FontWeight.w700,
     fontSize: 16,
   );
+  static const TextStyle navText = TextStyle(
+    color: CustomTheme.black,
+    fontFamily: Fonts.quickSand,
+    fontWeight: FontWeight.w500,
+    fontSize: 14,
+  );
 }

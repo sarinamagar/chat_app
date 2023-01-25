@@ -9,7 +9,7 @@ class CustomTheme {
   static const Color gray = Color(0xFFEAEEF4);
   static const Color darkGray = Color(0xFFAEAFB2);
   static const Color lightGray = Color(0xFFd9d9d9);
-  static const Color lightTextColor = Color(0xff988D8D);
+  static const Color lightTextColor = Color(0xfff5f5f5);
   static const Color darkTextColor = Color(0xff847F7F);
   static const Color blue1 = Color(0xFF9FCCFB);
   static const Color blue2 = Color(0xFFAECEF5);
