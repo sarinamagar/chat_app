@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "336229946103",
+    "project_id": "forum-a25c9",
+    "storage_bucket": "forum-a25c9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:336229946103:android:69c9913f0940c8b0ebb9f2",
+        "android_client_info": {
+          "package_name": "com.example.forum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "336229946103-eck78kuquh37it2ji7l8h2t1b7e6rg75.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkLVm_JySXaCPajqgXrNzJqzxrlpS7I5s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "336229946103-eck78kuquh37it2ji7l8h2t1b7e6rg75.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:forum/feature/auth/login.dart';
+import 'package:forum/feature/authentication/screens/authentication_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:forum/feature/dashboard/screens/dashboard_screen.dart';
 
-void main() {
+// void main() {
+//   runApp(const AuthenticationScreen());
+// }
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -16,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginScreen(),
+      home: AuthenticationScreen(),
     );
   }
 }
