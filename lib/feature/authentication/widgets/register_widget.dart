@@ -78,7 +78,6 @@ class _RegisterWidgetState extends State<RegisterWidget> {
               Center(
                 child: CustomRoundedButton(
                   title: "Register",
-                  onPressed: () {},
                 ),
               ),
               Container(

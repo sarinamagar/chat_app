@@ -29,6 +29,12 @@ class CustomTextStyle {
     fontWeight: FontWeight.w400,
     letterSpacing: 1,
   );
+  static const TextStyle hintText2 = TextStyle(
+    color: CustomTheme.darkGray,
+    fontFamily: Fonts.quickSand,
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+  );
   static const TextStyle heading1 = TextStyle(
     color: CustomTheme.black,
     fontFamily: Fonts.quickSand,
@@ -64,5 +70,10 @@ class CustomTextStyle {
     fontFamily: Fonts.quickSand,
     fontWeight: FontWeight.w700,
     fontSize: 28,
+  );
+  static const TextStyle searchText = TextStyle(
+    color: CustomTheme.black,
+    fontFamily: Fonts.quickSand,
+    fontSize: 18,
   );
 }

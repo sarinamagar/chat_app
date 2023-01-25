@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:forum/common/widget/messages/message_tile.dart';
+
+import '../../../common/widget/text_field/search_textfiled.dart';
 
 class MessagesWidgets extends StatefulWidget {
   const MessagesWidgets({super.key});
@@ -8,11 +11,17 @@ class MessagesWidgets extends StatefulWidget {
 }
 
 class _MessagesWidgetsState extends State<MessagesWidgets> {
+  final TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text("Messages"),
+      body: Column(
+        children: [
+          SearchTextField(
+            controller: _searchController,
+            hintText: 'Search',
+          ),
+        ],
       ),
     );
   }
