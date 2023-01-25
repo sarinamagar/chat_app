@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:forum/feature/authentication/screens/authentication_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:forum/feature/dashboard/screens/dashboard_screen.dart';
 
 // void main() {
 //   runApp(const AuthenticationScreen());
