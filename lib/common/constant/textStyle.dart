@@ -59,4 +59,10 @@ class CustomTextStyle {
     fontWeight: FontWeight.w500,
     fontSize: 14,
   );
+  static const TextStyle appText = TextStyle(
+    color: CustomTheme.black,
+    fontFamily: Fonts.quickSand,
+    fontWeight: FontWeight.w700,
+    fontSize: 28,
+  );
 }

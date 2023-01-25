@@ -10,7 +10,7 @@ class MessagesWidgets extends StatefulWidget {
 class _MessagesWidgetsState extends State<MessagesWidgets> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: Text("Messages"),
       ),

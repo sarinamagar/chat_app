@@ -29,31 +29,39 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
-    return SafeArea(
-        top: false,
-        bottom: true,
-        child: Container(
-          width: _width,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              NavigationBarItem(
-                index: 0,
-                label: 'Messages',
-                onTap: handleItemSelected,
-                icon: CupertinoIcons.bubble_left_bubble_right_fill,
-                isSelected: (selectedIndex == 0),
-              ),
-              NavigationBarItem(
-                index: 1,
-                label: 'Channels',
-                onTap: handleItemSelected,
-                icon: CupertinoIcons.chat_bubble_text_fill,
-                isSelected: (selectedIndex == 1),
-              ),
-            ],
-          ),
-        ));
+    return Container(
+      padding: const EdgeInsets.only(top: 8),
+      decoration: const BoxDecoration(
+        border: Border(
+          top: BorderSide(width: 1, color: CustomTheme.darkGray),
+        ),
+      ),
+      child: SafeArea(
+          top: false,
+          bottom: true,
+          child: Container(
+            width: _width,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                NavigationBarItem(
+                  index: 0,
+                  label: 'Messages',
+                  onTap: handleItemSelected,
+                  icon: CupertinoIcons.bubble_left_bubble_right_fill,
+                  isSelected: (selectedIndex == 0),
+                ),
+                NavigationBarItem(
+                  index: 1,
+                  label: 'Channels',
+                  onTap: handleItemSelected,
+                  icon: CupertinoIcons.chat_bubble_text_fill,
+                  isSelected: (selectedIndex == 1),
+                ),
+              ],
+            ),
+          )),
+    );
   }
 }
 
@@ -82,7 +90,7 @@ class NavigationBarItem extends StatelessWidget {
         onTap(index);
       },
       child: SizedBox(
-        height: 70,
+        height: 60,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -92,7 +100,7 @@ class NavigationBarItem extends StatelessWidget {
               color: isSelected ? CustomTheme.black : CustomTheme.darkGray,
             ),
             const SizedBox(
-              height: 8,
+              height: 6,
             ),
             Text(label,
                 style: TextStyle(
