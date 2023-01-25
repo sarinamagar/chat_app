@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:forum/feature/authentication/screens/authentication_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:forum/services/local_notification_service.dart';
+import 'package:forum/viewmodels/auth_viewmodel.dart';
+import 'package:forum/viewmodels/global_ui_viewmodel.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:provider/provider.dart';
+
+import 'feature/authentication/screens/login_screen.dart';
+import 'feature/authentication/screens/register_screen.dart';
 
 // void main() {
 //   runApp(const AuthenticationScreen());
@@ -9,21 +17,64 @@ import 'package:firebase_auth/firebase_auth.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const AuthenticationScreen());
+  NotificationService.initialize();
+  runApp(MyApp());
 }
 
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+
+//   // This widget is the root of your application.
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Forum - Chat Application',
+//       debugShowCheckedModeBanner: false,
+//       theme: ThemeData(
+//         primarySwatch: Colors.cyan,
+//         textTheme: GoogleFonts.latoTextTheme(),
+//       ),
+//       home: const AuthenticationScreen(),
+//     );
+//   }
+// }
+
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => GlobalUIViewModel()),
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
+      ],
+      child: GlobalLoaderOverlay(
+        useDefaultLoading: true,
+        child: Consumer<GlobalUIViewModel>(builder: (context, loader, child) {
+          if (loader.isLoading) {
+            context.loaderOverlay.show();
+          } else {
+            context.loaderOverlay.hide();
+          }
+          return MaterialApp(
+            title: 'Forum - Chat Application',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: Colors.cyan,
+              textTheme: GoogleFonts.latoTextTheme(),
+            ),
+            initialRoute: "/authentication",
+            routes: {
+              "/authentication": (BuildContext context) =>
+                  const AuthenticationScreen(),
+              "/login": (BuildContext context) => const LoginScreens(),
+              "/register": (BuildContext context) => RegisterScreen(),
+            },
+          );
+        }),
       ),
-      home: AuthenticationScreen(),
     );
   }
 }
