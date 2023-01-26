@@ -39,7 +39,7 @@ class CustomTextStyle {
     color: CustomTheme.black,
     fontFamily: Fonts.quickSand,
     fontWeight: FontWeight.w500,
-    fontSize: 26,
+    fontSize: 28,
   );
   static const TextStyle subHeading = TextStyle(
     color: CustomTheme.black,

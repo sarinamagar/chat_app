@@ -11,7 +11,7 @@ class CustomTextField extends StatefulWidget {
   final double bottomPadding;
   final bool obscureText;
   final bool readOnly;
-  final IconData? suffixIcon;
+  final Widget? suffixIcon;
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
   final bool isRequired;
@@ -82,6 +82,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     borderSide: BorderSide(color: CustomTheme.darkGray)),
                 labelText: widget.label,
                 labelStyle: CustomTextStyle.labelText,
+                suffixIcon: widget.suffixIcon,
               ),
             ),
           ),

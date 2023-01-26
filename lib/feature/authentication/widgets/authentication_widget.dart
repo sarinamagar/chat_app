@@ -15,14 +15,14 @@ class AuthenticationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: Color(0xFF000000)),
-      home: MainTab(),
+      theme: ThemeData(primaryColor: const Color(0xFF000000)),
+      home: const MainTab(),
     );
   }
 }
 
 class MainTab extends HookWidget {
-  const MainTab();
+  const MainTab({super.key});
 
   @override
   Widget build(BuildContext context) {
