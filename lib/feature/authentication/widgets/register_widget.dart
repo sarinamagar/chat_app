@@ -71,70 +71,124 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-                horizontal: CustomTheme.symmetricHozPadding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 20, bottom: 14),
-                  child: const Text(
-                    "Register to Forum",
-                    style: CustomTextStyle.heading1,
-                  ),
+    return Form(
+      key: _formKey,
+      child: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+              horizontal: CustomTheme.symmetricHozPadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 20, bottom: 14),
+                child: const Text(
+                  "Register to Forum",
+                  style: CustomTextStyle.heading1,
                 ),
-                const Text(
-                  "Loren ipsum dot stiii",
-                  style: CustomTextStyle.subHeading,
-                ),
-<<<<<<< HEAD
               ),
               const Text(
                 "Loren ipsum dot stiii",
                 style: CustomTextStyle.subHeading,
               ),
-              const SizedBox(
-                height: 25,
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 24),
+                alignment: Alignment.center,
+                child: DottedBorder(
+                  borderType: BorderType.Circle,
+                  strokeWidth: 2,
+                  dashPattern: const [6],
+                  color: CustomTheme.darkGray,
+                  child: InkWell(
+                    onTap: () {},
+                    child: Container(
+                      margin: const EdgeInsets.all(4),
+                      padding: const EdgeInsets.all(36),
+                      decoration: const BoxDecoration(
+                        color: Colors.black,
+                        shape: BoxShape.circle,
+                      ),
+                      child: CustomIconButton(
+                        icon: Icons.image_outlined,
+                        iconColor: CustomTheme.primaryColor,
+                        backgroundColor: CustomTheme.black,
+                        onPressed: () {},
+                      ),
+                    ),
+                  ),
+                ),
               ),
-              const CustomTextField(
+              CustomTextField(
                 label: "UserName",
                 hintText: "user_name123",
                 bottomPadding: 10,
                 obscureText: false,
                 readOnly: false,
                 isRequired: true,
+                controller: _usernameController,
+                validator: ValidateSignup.username,
               ),
-              const CustomTextField(
+              CustomTextField(
                 label: "E-Mail",
                 hintText: "user@gmail.com",
                 bottomPadding: 10,
                 obscureText: false,
                 readOnly: false,
                 isRequired: true,
+                controller: _emailController,
                 textInputType: TextInputType.emailAddress,
+                validator: ValidateSignup.emailValidate,
               ),
-              const CustomTextField(
+              CustomTextField(
                 label: "Password",
                 hintText: "•••••••••••",
                 bottomPadding: 10,
-                obscureText: true,
                 readOnly: false,
                 isRequired: true,
-                suffixIcon: Icons.abc,
+                controller: _passwordController,
+                obscureText: _obscureTextPassword,
+                validator: (String? value) =>
+                    ValidateSignup.password(value, _confirmPasswordController),
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _obscureTextPassword = !_obscureTextPassword;
+                    });
+                  },
+                  child: Icon(
+                    _obscureTextPassword
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                    size: 20.0,
+                    color: Colors.black,
+                  ),
+                ),
               ),
-              const CustomTextField(
+              CustomTextField(
                 label: "Confirm Password",
                 hintText: "•••••••••••",
                 bottomPadding: 10,
-                obscureText: true,
                 readOnly: false,
                 isRequired: true,
-                suffixIcon: Icons.abc,
+                controller: _confirmPasswordController,
+                obscureText: _obscureTextPasswordConfirm,
+                validator: (String? value) =>
+                    ValidateSignup.password(value, _passwordController),
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _obscureTextPasswordConfirm =
+                          !_obscureTextPasswordConfirm;
+                    });
+                  },
+                  child: Icon(
+                    _obscureTextPasswordConfirm
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                    size: 20.0,
+                    color: Colors.black,
+                  ),
+                ),
               ),
               const SizedBox(
                 height: 30,
@@ -142,143 +196,32 @@ class _RegisterWidgetState extends State<RegisterWidget> {
               Center(
                 child: CustomRoundedButton(
                   title: "Register",
-=======
-                const SizedBox(
-                  height: 0,
->>>>>>> authentication
+                  onPressed: () {
+                    register();
+                  },
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 24),
-                  alignment: Alignment.center,
-                  child: DottedBorder(
-                    borderType: BorderType.Circle,
-                    strokeWidth: 2,
-                    dashPattern: const [6],
-                    color: CustomTheme.darkGray,
-                    child: InkWell(
-                      onTap: () {},
-                      child: Container(
-                        margin: const EdgeInsets.all(4),
-                        padding: const EdgeInsets.all(36),
-                        decoration: const BoxDecoration(
-                          color: Colors.black,
-                          shape: BoxShape.circle,
-                        ),
-                        child: CustomIconButton(
-                          icon: Icons.image_outlined,
-                          iconColor: CustomTheme.primaryColor,
-                          backgroundColor: CustomTheme.black,
-                          onPressed: () {},
-                        ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 6, bottom: 50),
+                child: RichText(
+                  text: TextSpan(
+                    text: "Already have an account? ",
+                    style: CustomTextStyle.heading4,
+                    children: [
+                      TextSpan(
+                        text: "Login",
+                        style: CustomTextStyle.boldHeading4,
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.of(context, rootNavigator: true)
+                                .pushNamed("/login");
+                          },
                       ),
-                    ),
+                    ],
                   ),
                 ),
-                CustomTextField(
-                  label: "UserName",
-                  hintText: "user_name123",
-                  bottomPadding: 10,
-                  obscureText: false,
-                  readOnly: false,
-                  isRequired: true,
-                  controller: _usernameController,
-                  validator: ValidateSignup.username,
-                ),
-                CustomTextField(
-                  label: "E-Mail",
-                  hintText: "user@gmail.com",
-                  bottomPadding: 10,
-                  obscureText: false,
-                  readOnly: false,
-                  isRequired: true,
-                  controller: _emailController,
-                  textInputType: TextInputType.emailAddress,
-                  validator: ValidateSignup.emailValidate,
-                ),
-                CustomTextField(
-                  label: "Password",
-                  hintText: "•••••••••••",
-                  bottomPadding: 10,
-                  readOnly: false,
-                  isRequired: true,
-                  controller: _passwordController,
-                  obscureText: _obscureTextPassword,
-                  validator: (String? value) => ValidateSignup.password(
-                      value, _confirmPasswordController),
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _obscureTextPassword = !_obscureTextPassword;
-                      });
-                    },
-                    child: Icon(
-                      _obscureTextPassword
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      size: 20.0,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                CustomTextField(
-                  label: "Confirm Password",
-                  hintText: "•••••••••••",
-                  bottomPadding: 10,
-                  readOnly: false,
-                  isRequired: true,
-                  controller: _confirmPasswordController,
-                  obscureText: _obscureTextPasswordConfirm,
-                  validator: (String? value) =>
-                      ValidateSignup.password(value, _passwordController),
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _obscureTextPasswordConfirm =
-                            !_obscureTextPasswordConfirm;
-                      });
-                    },
-                    child: Icon(
-                      _obscureTextPasswordConfirm
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      size: 20.0,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Center(
-                  child: CustomRoundedButton(
-                    title: "Register",
-                    onPressed: () {
-                      register();
-                    },
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 6, bottom: 50),
-                  child: RichText(
-                    text: TextSpan(
-                      text: "Already have an account? ",
-                      style: CustomTextStyle.heading4,
-                      children: [
-                        TextSpan(
-                          text: "Login",
-                          style: CustomTextStyle.boldHeading4,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.of(context, rootNavigator: true)
-                                  .pushNamed("/login");
-                            },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

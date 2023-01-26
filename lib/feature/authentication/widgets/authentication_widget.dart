@@ -3,8 +3,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:forum/app/theme.dart';
 import 'package:forum/feature/authentication/screens/login_screen.dart';
 import 'package:forum/feature/authentication/screens/register_screen.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/tab_bar/myTabbar.dart';
+import '../../../viewmodels/auth_viewmodel.dart';
+import '../../../viewmodels/global_ui_viewmodel.dart';
 
 const kLabels = ["Sign-In", "Sign-Up"];
 const kTabBgColor = Color(0xFF0000000);
@@ -13,11 +16,18 @@ const kTabFgColor = Colors.white;
 class AuthenticationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: const Color(0xFF000000)),
-      home: const MainTab(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => GlobalUIViewModel()),
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(primaryColor: const Color(0xFF000000)),
+        home: const MainTab(),
+      ),
     );
+    return MainTab();
   }
 }
 
