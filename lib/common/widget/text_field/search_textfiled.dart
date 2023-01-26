@@ -21,7 +21,7 @@ class SearchTextField extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: const Color(0xffEFF3F6),
+        color: CustomTheme.lightTextColor,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,7 +30,7 @@ class SearchTextField extends StatelessWidget {
             padding: const EdgeInsets.only(left: 12),
             child: const Icon(
               Icons.search_rounded,
-              color: CustomTheme.darkGray,
+              color: CustomTheme.blue3,
             ),
           ),
           Expanded(

@@ -34,20 +34,36 @@ class _DashboardWidgetState extends State<DashboardWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: CustomTheme.primaryColor,
-        elevation: 0.8,
-        title: ValueListenableBuilder(
-            valueListenable: pageTitle,
-            builder: (BuildContext context, String value, _) {
-              return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 12),
-                child: Text(
-                  value,
-                  style: CustomTextStyle.appText,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70.0),
+        child: AppBar(
+          backgroundColor: CustomTheme.black,
+          elevation: 0.8,
+          centerTitle: true,
+          title: ValueListenableBuilder(
+              valueListenable: pageTitle,
+              builder: (BuildContext context, String value, _) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(
+                    value,
+                    style: CustomTextStyle.appText,
+                  ),
+                );
+              }),
+          leading: Container(
+            padding: EdgeInsets.only(left: 4),
+            child: Transform.scale(
+              scale: 1.4,
+              child: IconButton(
+                icon: Image.asset(
+                  'assets/images/logo.png',
                 ),
-              );
-            }),
+                onPressed: () {},
+              ),
+            ),
+          ),
+        ),
       ),
       body: ValueListenableBuilder(
           valueListenable: pageIndex,

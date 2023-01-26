@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import 'feature/authentication/screens/login_screen.dart';
 import 'feature/authentication/screens/register_screen.dart';
+import 'feature/dashboard/screens/dashboard_screen.dart';
 
 // void main() {
 //   runApp(const AuthenticationScreen());
@@ -65,11 +66,12 @@ class MyApp extends StatelessWidget {
               textTheme: GoogleFonts.latoTextTheme(),
             ),
             initialRoute: "/authentication",
-            routes: {
+            routes: <String, WidgetBuilder>{
               "/authentication": (BuildContext context) =>
                   const AuthenticationScreen(),
               "/login": (BuildContext context) => const LoginScreens(),
               "/register": (BuildContext context) => const RegisterScreen(),
+              "/dashboard": (BuildContext context) => const DashboardScreen(),
             },
           );
         }),

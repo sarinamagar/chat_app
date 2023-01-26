@@ -21,6 +21,13 @@ class _MessagesWidgetsState extends State<MessagesWidgets> {
             controller: _searchController,
             hintText: 'Search',
           ),
+          Expanded(
+            child: ListView.builder(
+                itemCount: 10,
+                itemBuilder: (BuildContext context, int index) {
+                  return MessageTile();
+                }),
+          )
         ],
       ),
     );

@@ -5,6 +5,7 @@ import 'package:forum/common/constant/textStyle.dart';
 import 'package:forum/common/widget/buttons/rounded_button.dart';
 import 'package:forum/common/widget/text_field/custom_textfield.dart';
 import 'package:forum/feature/authentication/screens/register_screen.dart';
+import 'package:forum/feature/dashboard/screens/dashboard_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../services/local_notification_service.dart';
@@ -40,7 +41,8 @@ class _LoginWidgetsState extends State<LoginWidgets> {
           body:
               "Hello ${_authViewModel.loggedInUser?.username},\n Hope you are having a wonderful day.",
         );
-        Navigator.of(context).pushReplacementNamed('/dashboard');
+        Navigator.pushReplacement(context,
+            new MaterialPageRoute(builder: (context) => new DashboardScreen()));
       }).catchError((e) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(e.message.toString())));
@@ -153,11 +155,6 @@ class _LoginWidgetsState extends State<LoginWidgets> {
                             style: CustomTextStyle.boldHeading4,
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) =>
-                                //             RegisterScreen()));\
                                 Navigator.of(context, rootNavigator: true)
                                     .pushNamed("/register");
                               }),

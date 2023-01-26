@@ -27,7 +27,6 @@ class AuthenticationWidget extends StatelessWidget {
         home: const MainTab(),
       ),
     );
-    return MainTab();
   }
 }
 

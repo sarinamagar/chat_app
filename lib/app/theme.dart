@@ -9,11 +9,14 @@ class CustomTheme {
   static const Color gray = Color(0xFFEAEEF4);
   static const Color darkGray = Color(0xFFAEAFB2);
   static const Color lightGray = Color(0xFFd9d9d9);
-  static const Color lightTextColor = Color(0xfff5f5f5);
+  static const Color lightTextColor = Color(0xffF5F5F5);
   static const Color darkTextColor = Color(0xff847F7F);
   static const Color blue1 = Color(0xFF9FCCFB);
   static const Color blue2 = Color(0xFFAECEF5);
-  static const Color blue3 = Color(0xFFD4EDFC);
+  static const Color blue3 = Color(0xFFB3BFCF);
+  static const Color divider = Color(0xFFDBD6D6);
+  static const Color message = Color(0xFF7E7A7A);
+  static const Color date = Color(0xFF67B13A);
   static Color shadowColor = const Color(0xFF000000).withOpacity(0.5);
 
   static ThemeData themeData = ThemeData(
