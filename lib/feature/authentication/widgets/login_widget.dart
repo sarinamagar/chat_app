@@ -136,7 +136,9 @@ class _LoginWidgetsState extends State<LoginWidgets> {
                 Center(
                   child: CustomRoundedButton(
                     title: "Login",
-                    onPressed: () {},
+                    onPressed: () {
+                      login();
+                    },
                   ),
                 ),
                 Container(
