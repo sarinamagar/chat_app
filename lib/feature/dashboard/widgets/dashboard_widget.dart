@@ -35,7 +35,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70.0),
+        preferredSize: const Size.fromHeight(70.0),
         child: AppBar(
           backgroundColor: CustomTheme.black,
           elevation: 0.8,
@@ -51,17 +51,12 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                   ),
                 );
               }),
-          leading: Container(
-            padding: EdgeInsets.only(left: 4),
-            child: Transform.scale(
-              scale: 1.4,
-              child: IconButton(
-                icon: Image.asset(
-                  'assets/images/logo.png',
-                ),
-                onPressed: () {},
-              ),
-            ),
+          flexibleSpace: Container(
+            margin: const EdgeInsets.only(right: 300, bottom: 4),
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/images/logo.png'),
+                    fit: BoxFit.contain)),
           ),
         ),
       ),

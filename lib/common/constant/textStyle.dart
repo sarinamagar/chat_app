@@ -53,6 +53,12 @@ class CustomTextStyle {
     fontWeight: FontWeight.w500,
     fontSize: 16,
   );
+  static const TextStyle heading4W = TextStyle(
+    color: CustomTheme.primaryColor,
+    fontFamily: Fonts.quickSand,
+    fontWeight: FontWeight.w500,
+    fontSize: 16,
+  );
   static const TextStyle boldHeading4 = TextStyle(
     color: CustomTheme.black,
     fontFamily: Fonts.quickSand,
@@ -75,7 +81,7 @@ class CustomTextStyle {
     color: CustomTheme.primaryColor,
     fontFamily: Fonts.quickSand,
     fontWeight: FontWeight.w500,
-    fontSize: 22,
+    fontSize: 19,
   );
   static const TextStyle searchText = TextStyle(
     color: CustomTheme.black,
@@ -99,5 +105,11 @@ class CustomTextStyle {
     fontFamily: Fonts.quickSand,
     fontWeight: FontWeight.w500,
     fontSize: 13,
+  );
+  static const TextStyle messageHint = TextStyle(
+    color: CustomTheme.darkGray,
+    fontFamily: Fonts.quickSand,
+    fontWeight: FontWeight.w500,
+    fontSize: 16,
   );
 }
