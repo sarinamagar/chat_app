@@ -91,7 +91,7 @@ class CustomTextStyle {
   static const TextStyle username = TextStyle(
     color: CustomTheme.black,
     fontFamily: Fonts.quickSand,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w500,
     fontSize: 20,
   );
   static const TextStyle message = TextStyle(

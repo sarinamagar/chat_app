@@ -37,24 +37,29 @@ class SearchTextField extends StatelessWidget {
             child: SizedBox(
               height: 50,
               child: TextField(
-                style: CustomTextStyle.searchText,
-                cursorColor: CustomTheme.black,
-                maxLines: 1,
-                keyboardType: TextInputType.text,
-                controller: controller,
-                textInputAction: TextInputAction.search,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  fillColor: Colors.transparent,
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 20,
-                    horizontal: 12,
+                  style: CustomTextStyle.searchText,
+                  cursorColor: CustomTheme.black,
+                  maxLines: 1,
+                  keyboardType: TextInputType.text,
+                  controller: controller,
+                  textInputAction: TextInputAction.search,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    fillColor: Colors.transparent,
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 12,
+                    ),
+                    counterText: "",
+                    hintText: hintText,
+                    hintStyle: CustomTextStyle.hintText2,
                   ),
-                  counterText: "",
-                  hintText: hintText,
-                  hintStyle: CustomTextStyle.hintText2,
-                ),
-              ),
+                  onEditingComplete: () {
+                    FocusScope.of(context).unfocus();
+                    if (onSearched != null) {
+                      onSearched!();
+                    }
+                  }),
             ),
           ),
         ],

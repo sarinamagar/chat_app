@@ -5,8 +5,11 @@ import 'package:forum/feature/chat/screens/chat_screen.dart';
 import 'package:forum/models/message_data.dart';
 
 class MessageTile extends StatelessWidget {
-  const MessageTile({super.key});
-
+  MessageTile({
+    super.key,
+    required this.username,
+  });
+  final String username;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -30,9 +33,9 @@ class MessageTile extends StatelessWidget {
                 margin: const EdgeInsets.only(left: 20, right: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      "Sarina",
+                      username,
                       style: CustomTextStyle.username,
                     ),
                     SizedBox(
@@ -46,7 +49,7 @@ class MessageTile extends StatelessWidget {
                 ),
               ),
             ),
-            Text(
+            const Text(
               "12 Jan, 23",
               style: CustomTextStyle.date,
             )
