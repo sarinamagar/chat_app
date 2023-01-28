@@ -21,7 +21,7 @@ class SentMessage extends StatelessWidget {
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(_borderRadiusRight),
                 topRight: Radius.circular(_borderRadiusRight),
-                bottomRight: Radius.circular(_borderRadiusLeft),
+                bottomRight: Radius.circular(_borderRadiusRight),
                 bottomLeft: Radius.circular(_borderRadiusRight)),
           ),
           child: Padding(
