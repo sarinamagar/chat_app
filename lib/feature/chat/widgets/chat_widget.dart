@@ -1,15 +1,16 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:forum/app/theme.dart';
 import 'package:forum/common/constant/textStyle.dart';
 import 'package:forum/common/widget/messages/received_message.dart';
 import 'package:forum/common/widget/messages/sent_message.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-
-import '../../../common/widget/messages/date_label.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 import '../../../common/widget/text_field/message_textfield.dart';
-import '../../../model/messages.dart';
 
 class ChatWidgets extends StatelessWidget {
   ChatWidgets(
@@ -23,9 +24,62 @@ class ChatWidgets extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   final List<Map<String, dynamic>> users;
-
   final String chatRoomId;
   final String selectedUsername;
+  File? imageFile;
+
+  Future getImage() async {
+    ImagePicker _imagepicker = ImagePicker();
+
+    await _imagepicker.pickImage(source: ImageSource.gallery).then((xFile) {
+      if (xFile != null) {
+        imageFile = File(xFile.path);
+        uploadImage();
+      }
+    });
+  }
+
+  Future uploadImage() async {
+    String fileName = const Uuid().v1();
+    int status = 1;
+    String userName = _auth.currentUser!.email.toString();
+    await _firestore
+        .collection('chatroom')
+        .doc(chatRoomId)
+        .collection('chats')
+        .doc(fileName)
+        .set({
+      "sendby": userName,
+      "message": "",
+      "type": "img",
+      "time": FieldValue.serverTimestamp(),
+    });
+    var ref = FirebaseStorage.instance.ref();
+    var folderRef = ref.child('images');
+    var fileRef = folderRef.child("$fileName.jpg");
+    var uploadTask =
+        await fileRef.putFile(imageFile!).catchError((error) async {
+      await _firestore
+          .collection('chatroom')
+          .doc(chatRoomId)
+          .collection('chats')
+          .doc(fileName)
+          .delete();
+
+      status = 0;
+    });
+
+    if (status == 1) {
+      String imageUrl = await uploadTask.ref.getDownloadURL();
+      await _firestore
+          .collection('chatroom')
+          .doc(chatRoomId)
+          .collection('chats')
+          .doc(fileName)
+          .update({"message": imageUrl});
+      print(imageUrl);
+    }
+  }
 
   void onSendMessage() async {
     if (_message.text.isNotEmpty) {
@@ -33,6 +87,7 @@ class ChatWidgets extends StatelessWidget {
       Map<String, dynamic> messages = {
         "sendby": userName,
         "message": _message.text,
+        "type": "text",
         "time": FieldValue.serverTimestamp(),
       };
       await _firestore
@@ -147,6 +202,7 @@ class ChatWidgets extends StatelessWidget {
               child: MessageTextField(
                 sendMessage: onSendMessage,
                 controller: _message,
+                sendImage: getImage,
               ),
             ),
           ],
@@ -156,11 +212,28 @@ class ChatWidgets extends StatelessWidget {
   }
 
   Widget messages(Size size, Map<String, dynamic> userMap) {
-    return Container(
-      width: size.width,
-      child: userMap['sendby'] == _auth.currentUser?.email.toString()
-          ? SentMessage(message: userMap['message'])
-          : ReceivedMessage(message: userMap['message']),
-    );
+    return userMap['type'] == "text"
+        ? Container(
+            width: size.width,
+            child: userMap['sendby'] == _auth.currentUser?.email.toString()
+                ? SentMessage(message: userMap['message'])
+                : ReceivedMessage(message: userMap['message']),
+          )
+        : Container(
+            height: size.height / 2.5,
+            width: size.width,
+            alignment: userMap['sendby'] == _auth.currentUser?.email.toString()
+                ? Alignment.centerRight
+                : Alignment.centerLeft,
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              height: size.height / 2.5,
+              width: size.width / 2,
+              alignment: Alignment.center,
+              child: userMap['message'] != ""
+                  ? Image.network(userMap['message'])
+                  : const CircularProgressIndicator(),
+            ),
+          );
   }
 }

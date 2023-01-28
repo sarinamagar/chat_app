@@ -6,8 +6,12 @@ import 'package:forum/common/constant/textStyle.dart';
 
 class MessageTextField extends StatelessWidget {
   MessageTextField(
-      {super.key, required this.sendMessage, required this.controller});
+      {super.key,
+      required this.sendMessage,
+      required this.controller,
+      this.sendImage});
   final void Function() sendMessage;
+  final void Function()? sendImage;
   final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
@@ -26,7 +30,7 @@ class MessageTextField extends StatelessWidget {
                 child: Row(
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: sendImage,
                       child: Container(
                         height: 30,
                         width: 30,
