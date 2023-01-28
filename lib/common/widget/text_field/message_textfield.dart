@@ -5,8 +5,10 @@ import 'package:forum/app/theme.dart';
 import 'package:forum/common/constant/textStyle.dart';
 
 class MessageTextField extends StatelessWidget {
-  const MessageTextField({super.key});
-
+  MessageTextField(
+      {super.key, required this.sendMessage, required this.controller});
+  final void Function() sendMessage;
+  final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,10 +44,11 @@ class MessageTextField extends StatelessWidget {
                     const SizedBox(
                       width: 15,
                     ),
-                    const Expanded(
+                    Expanded(
                       child: Center(
                         child: TextField(
-                          decoration: InputDecoration(
+                          controller: controller,
+                          decoration: const InputDecoration(
                             hintText: "Enter message...",
                             hintStyle: CustomTextStyle.messageHint,
                             border: InputBorder.none,
@@ -57,12 +60,12 @@ class MessageTextField extends StatelessWidget {
                       width: 15,
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 12),
+                      margin: const EdgeInsets.symmetric(horizontal: 12),
                       child: FloatingActionButton(
-                        onPressed: () {},
                         backgroundColor: CustomTheme.black,
                         elevation: 0,
-                        child: const Icon(
+                        onPressed: sendMessage,
+                        child: Icon(
                           Icons.send,
                           color: CustomTheme.divider,
                           size: 20,

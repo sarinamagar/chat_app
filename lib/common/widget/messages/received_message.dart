@@ -24,7 +24,7 @@ class ReceivedMessage extends StatelessWidget {
                 topLeft: Radius.circular(_borderRadiusRight),
                 topRight: Radius.circular(_borderRadiusRight),
                 bottomRight: Radius.circular(_borderRadiusRight),
-                bottomLeft: Radius.circular(_borderRadiusLeft)),
+                bottomLeft: Radius.circular(_borderRadiusRight)),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12.8),

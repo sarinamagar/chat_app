@@ -8,15 +8,14 @@ class MessageTile extends StatelessWidget {
   MessageTile({
     super.key,
     required this.username,
+    required this.onPressed,
   });
   final String username;
+  final void Function() onPressed;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.push(context,
-            new MaterialPageRoute(builder: (context) => new ChatScreen()));
-      },
+      onTap: onPressed,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 2),
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),

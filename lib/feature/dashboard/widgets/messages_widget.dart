@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:forum/common/widget/messages/message_tile.dart';
+import 'package:forum/feature/chat/widgets/chat_widget.dart';
 import 'package:forum/services/firebase_service.dart';
 
 import '../../../common/widget/text_field/search_textfiled.dart';
@@ -13,8 +16,11 @@ class MessagesWidgets extends StatefulWidget {
 }
 
 class _MessagesWidgetsState extends State<MessagesWidgets> {
-  List<Map<String, dynamic>> users = [];
+  static List<Map<String, dynamic>> users = [];
   final TextEditingController _searchController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String userName = "";
+
   void onSearched() async {
     try {
       await FirebaseService.db
@@ -26,6 +32,8 @@ class _MessagesWidgetsState extends State<MessagesWidgets> {
           users = value.docs.map((doc) => doc.data()).toList();
           print(users.length);
           print(users);
+          print(_auth.currentUser);
+          userName = _auth.currentUser!.email.toString();
         });
       });
     } catch (e) {
@@ -50,6 +58,17 @@ class _MessagesWidgetsState extends State<MessagesWidgets> {
                       itemBuilder: (BuildContext context, int index) {
                         return MessageTile(
                           username: users[index]['username'],
+                          onPressed: () {
+                            String cId =
+                                chatRoomId(userName, users[index]['username']);
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => ChatWidgets(
+                                      users: users,
+                                      chatRoomId: cId,
+                                      selectedUsername: users[index]
+                                          ['username'],
+                                    )));
+                          },
                         );
                       }),
                 )
@@ -58,5 +77,14 @@ class _MessagesWidgetsState extends State<MessagesWidgets> {
         ],
       ),
     );
+  }
+
+  String chatRoomId(String user1, String user2) {
+    if (user1[0].toLowerCase().codeUnits[0] >
+        user2.toLowerCase().codeUnits[0]) {
+      return "$user1$user2";
+    } else {
+      return "$user2$user1";
+    }
   }
 }
