@@ -99,6 +99,11 @@ class _LoginWidgetsState extends State<LoginWidgets> {
                   textInputType: TextInputType.emailAddress,
                   controller: _emailController,
                   validator: ValidateLogin.emailValidate,
+                  suffixIcon: const Icon(
+                    Icons.mail,
+                    color: CustomTheme.black,
+                    size: 20,
+                  ),
                 ),
                 CustomTextField(
                   label: "Password",

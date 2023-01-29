@@ -127,6 +127,10 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 isRequired: true,
                 controller: _usernameController,
                 validator: ValidateSignup.username,
+                suffixIcon: const Icon(
+                  Icons.account_circle,
+                  color: CustomTheme.black,
+                ),
               ),
               CustomTextField(
                 label: "E-Mail",
@@ -138,6 +142,11 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 controller: _emailController,
                 textInputType: TextInputType.emailAddress,
                 validator: ValidateSignup.emailValidate,
+                suffixIcon: const Icon(
+                  Icons.mail,
+                  color: CustomTheme.black,
+                  size: 20,
+                ),
               ),
               CustomTextField(
                 label: "Password",

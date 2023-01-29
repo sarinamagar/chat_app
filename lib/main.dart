@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forum/feature/authentication/screens/authentication_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:forum/viewmodels/auth_viewmodel.dart';
 import 'package:forum/viewmodels/global_ui_viewmodel.dart';
 import 'package:google_fonts/google_fonts.dart';

@@ -1,5 +1,7 @@
 import 'dart:io';
-
+import 'package:forum/common/widget/messages/messages.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -10,6 +12,7 @@ import 'package:forum/common/widget/messages/received_message.dart';
 import 'package:forum/common/widget/messages/sent_message.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
+import '../../../common/widget/messages/date_label.dart';
 import '../../../common/widget/text_field/message_textfield.dart';
 
 class ChatWidgets extends StatelessWidget {
@@ -182,6 +185,13 @@ class ChatWidgets extends StatelessWidget {
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.data != null) {
+                    // List<ChatMessage> messages = [];
+                    // for (var doc in snapshot.data!.documents) {
+                    //   messages.add(ChatMessage(
+                    //     time: doc.data()['time'],
+                    //     message: doc.data()['message'],
+                    //   ));
+                    // }
                     return ListView.builder(
                         itemCount: snapshot.data?.docs.length,
                         itemBuilder: (context, index) {
@@ -212,12 +222,27 @@ class ChatWidgets extends StatelessWidget {
   }
 
   Widget messages(Size size, Map<String, dynamic> userMap) {
+    Timestamp timestamp = userMap['time'];
+    final DateFormat formatter = DateFormat('HH:mm');
+    final DateTime dateTime = timestamp.toDate();
+    print(dateTime.minute % 5 == 0);
+    String? dateString =
+        dateTime.minute % 10 == 0 ? formatter.format(dateTime) : null;
+    // String dateString = formatter.format(dateTime);
     return userMap['type'] == "text"
-        ? Container(
-            width: size.width,
-            child: userMap['sendby'] == _auth.currentUser?.email.toString()
-                ? SentMessage(message: userMap['message'])
-                : ReceivedMessage(message: userMap['message']),
+        ? Column(
+            children: [
+              dateString != null ? DateLabel(label: dateString) : Container(),
+              Container(
+                width: size.width,
+                child: userMap['sendby'] == _auth.currentUser?.email.toString()
+                    ? SentMessage(
+                        message: userMap['message'],
+                        time: dateString.toString(),
+                      )
+                    : ReceivedMessage(message: userMap['message']),
+              ),
+            ],
           )
         : Container(
             height: size.height / 2.5,
@@ -237,3 +262,44 @@ class ChatWidgets extends StatelessWidget {
           );
   }
 }
+//   Widget messages(Size size, Map<String, dynamic> userMap) {
+//     Timestamp timestamp = userMap['time'];
+//     print("userMap.length ${userMap.length}");
+//     final DateFormat formatter = DateFormat('HH:mm');
+//     final DateTime dateTime = timestamp.toDate();
+//     String dateString = formatter.format(dateTime);
+
+//     bool _showTimestamp = true;
+
+//     return userMap['type'] == "text"
+//         ? Column(
+//             children: [
+//               Container(
+//                 width: size.width,
+//                 child: userMap['sendby'] == _auth.currentUser?.email.toString()
+//                     ? SentMessage(
+//                         message: userMap['message'],
+//                         time: _showTimestamp ? dateString : "",
+//                       )
+//                     : ReceivedMessage(message: userMap['message']),
+//               ),
+//             ],
+//           )
+//         : Container(
+//             height: size.height / 2.5,
+//             width: size.width,
+//             alignment: userMap['sendby'] == _auth.currentUser?.email.toString()
+//                 ? Alignment.centerRight
+//                 : Alignment.centerLeft,
+//             child: Container(
+//               margin: const EdgeInsets.symmetric(horizontal: 20),
+//               height: size.height / 2.5,
+//               width: size.width / 2,
+//               alignment: Alignment.center,
+//               child: userMap['message'] != ""
+//                   ? Image.network(userMap['message'])
+//                   : const CircularProgressIndicator(),
+//             ),
+//           );
+//   }
+// }

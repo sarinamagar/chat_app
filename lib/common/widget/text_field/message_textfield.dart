@@ -19,7 +19,7 @@ class MessageTextField extends StatelessWidget {
       body: SafeArea(
         bottom: true,
         child: Stack(
-          children: <Widget>[
+          children: [
             Align(
               alignment: Alignment.bottomLeft,
               child: Container(

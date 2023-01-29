@@ -1,5 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ChatMessage {
-  String messageContent;
-  String messageType;
-  ChatMessage({required this.messageContent, required this.messageType});
+  final Timestamp time;
+  final String message;
+  ChatMessage({
+    required this.time,
+    required this.message,
+  });
 }
