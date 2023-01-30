@@ -13,7 +13,7 @@ class SentMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // time != "" ? DateLabel(label: time) : Container(),
+        // time != null ? DateLabel(label: time) : Container(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4),
           child: Align(

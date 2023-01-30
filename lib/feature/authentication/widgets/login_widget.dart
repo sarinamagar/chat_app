@@ -43,6 +43,8 @@ class _LoginWidgetsState extends State<LoginWidgets> {
         );
         Navigator.pushReplacement(context,
             new MaterialPageRoute(builder: (context) => new DashboardScreen()));
+        // Navigator.of(context, rootNavigator: true)
+        //     .pushReplacementNamed('/dashboard');
       }).catchError((e) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(e.message.toString())));
