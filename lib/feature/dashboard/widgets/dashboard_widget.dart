@@ -35,7 +35,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70.0),
+        preferredSize: const Size.fromHeight(90.0),
         child: AppBar(
           backgroundColor: CustomTheme.black,
           elevation: 0.8,
@@ -45,6 +45,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
               builder: (BuildContext context, String value, _) {
                 return Container(
                   margin: const EdgeInsets.symmetric(horizontal: 12),
+                  padding: const EdgeInsets.only(top: 35),
                   child: Text(
                     value,
                     style: CustomTextStyle.appText,

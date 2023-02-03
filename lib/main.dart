@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:forum/feature/authentication/screens/authentication_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:forum/viewmodels/auth_viewmodel.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import 'feature/authentication/screens/login_screen.dart';
 import 'feature/authentication/screens/register_screen.dart';
+import 'feature/authentication/widgets/splash_screen.dart';
 import 'feature/dashboard/screens/dashboard_screen.dart';
 
 // void main() {
@@ -16,6 +18,9 @@ import 'feature/dashboard/screens/dashboard_screen.dart';
 // }
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Firebase.initializeApp();
   runApp(const AuthenticationScreen());
 }
@@ -64,8 +69,9 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.cyan,
               textTheme: GoogleFonts.latoTextTheme(),
             ),
-            initialRoute: "/authentication",
+            initialRoute: "/splash",
             routes: <String, WidgetBuilder>{
+              "/splash": (BuildContext context) => SplashScreen(),
               "/authentication": (BuildContext context) =>
                   const AuthenticationScreen(),
               "/login": (BuildContext context) => const LoginScreens(),
