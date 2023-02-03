@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:forum/common/widget/buttons/icon_button.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../../app/theme.dart';
 import '../../../common/constant/textStyle.dart';
@@ -27,7 +32,8 @@ class _RegisterWidgetState extends State<RegisterWidget> {
       TextEditingController();
   bool _obscureTextPassword = true;
   bool _obscureTextPasswordConfirm = true;
-
+  File? imageFile;
+  String imageUrl = "";
   late GlobalUIViewModel _ui;
   late AuthViewModel _auth;
 
@@ -44,22 +50,26 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     }
     _ui.loadState(true);
     try {
-      await _auth
-          .register(UserModel(
-        email: _emailController.text,
-        password: _passwordController.text,
-        username: _usernameController.text,
-      ))
-          .then((value) {
-        NotificationService.display(
-          title: "Welcome to this app",
-          body:
-              "Hello ${_auth.loggedInUser?.username},\n Thank you for registering in this application.",
-        );
-        Navigator.of(context).pushReplacementNamed("/dashboard");
-      }).catchError((e) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(e.message.toString())));
+      await takeImageFromCamera().then((value) {
+        imageUrl = value;
+        _auth
+            .register(UserModel(
+          email: _emailController.text,
+          password: _passwordController.text,
+          username: _usernameController.text,
+          imageUrl: imageUrl,
+        ))
+            .then((value) {
+          NotificationService.display(
+            title: "Welcome to this app",
+            body:
+                "Hello ${_auth.loggedInUser?.username},\n Thank you for registering in this application.",
+          );
+          Navigator.of(context).pushReplacementNamed("/dashboard");
+        }).catchError((e) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(e.message.toString())));
+        });
       });
     } catch (err) {
       ScaffoldMessenger.of(context)
@@ -67,6 +77,33 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     }
     _ui.loadState(false);
   }
+
+  Future<String> takeImageFromCamera() async {
+    final image = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 512,
+      maxHeight: 512,
+      imageQuality: 75,
+    );
+    Reference ref = FirebaseStorage.instance.ref().child("profilepic.jpg");
+    await ref.putFile(File(image!.path));
+    return ref.getDownloadURL().then(((value) {
+      return value;
+    }));
+  }
+
+  // void _uploadImageFile() {
+  //   if (imageFile == null) return;
+  //   final storageRef = FirebaseStorage.instance.ref();
+  //   final profileImagesRef = storageRef
+  //       .child('${FirebaseAuth.instance.currentUser?.uid}/photos/profile.jpg');
+
+  //   profileImagesRef.putFile(imageFile!).snapshotEvents.listen((taskSnapshot) {
+  //     print(taskSnapshot.state);
+  //     switch (taskSnapshot.state) {
+  //     }
+  //   });
+  // }
 
   final _formKey = GlobalKey<FormState>();
   @override
@@ -100,7 +137,9 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                   dashPattern: const [6],
                   color: CustomTheme.darkGray,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      takeImageFromCamera();
+                    },
                     child: Container(
                       margin: const EdgeInsets.all(4),
                       padding: const EdgeInsets.all(36),

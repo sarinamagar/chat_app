@@ -235,7 +235,7 @@ class _ChatWidgetsState extends State<ChatWidgets> {
               ),
             ),
             Container(
-              height: _height / 12,
+              height: _height / 10,
               width: _width,
               alignment: Alignment.center,
               child: MessageTextField(
@@ -252,7 +252,6 @@ class _ChatWidgetsState extends State<ChatWidgets> {
 
   Widget messages(Size size, Map<String, dynamic> userMap) {
     Timestamp timestamp = userMap['time'];
-    print(userMap);
     final DateFormat formatter = DateFormat('HH:mm');
     final DateTime dateTime = timestamp.toDate();
     String dateString = "";

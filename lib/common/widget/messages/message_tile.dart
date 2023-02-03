@@ -9,9 +9,12 @@ class MessageTile extends StatelessWidget {
     super.key,
     required this.username,
     required this.onPressed,
+    required this.imageUrl,
   });
   final String username;
+  final String imageUrl;
   final void Function() onPressed;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -23,9 +26,10 @@ class MessageTile extends StatelessWidget {
             border: Border(bottom: BorderSide(color: CustomTheme.divider))),
         child: Row(
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               radius: 28,
               backgroundColor: CustomTheme.black,
+              backgroundImage: NetworkImage(imageUrl),
             ),
             Expanded(
               child: Container(

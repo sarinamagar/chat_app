@@ -31,6 +31,7 @@ class _MessagesWidgetsState extends State<MessagesWidgets> {
     FirebaseService.db.collection('users').get().then((value) {
       setState(() {
         users = value.docs.map((doc) => doc.data()).toList();
+        userName = _auth.currentUser!.email.toString();
       });
     });
   }
@@ -44,9 +45,6 @@ class _MessagesWidgetsState extends State<MessagesWidgets> {
           .then((value) {
         setState(() {
           users = value.docs.map((doc) => doc.data()).toList();
-          print(users.length);
-          print(users);
-          print(_auth.currentUser);
           userName = _auth.currentUser!.email.toString();
         });
       });
@@ -74,12 +72,12 @@ class _MessagesWidgetsState extends State<MessagesWidgets> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       final data = snapshot.data?.docs;
-                      print("data ${data}");
                       return ListView.builder(
                           itemCount: users.length,
                           itemBuilder: (BuildContext context, int index) {
                             return MessageTile(
                               username: users[index]['username'],
+                              imageUrl: users[index]['imageUrl'],
                               onPressed: () {
                                 String cId =
                                     chatRoomId(userName, users[index]['email']);
