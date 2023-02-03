@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +7,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:forum/common/widget/messages/message_tile.dart';
 import 'package:forum/feature/chat/widgets/chat_widget.dart';
 import 'package:forum/services/firebase_service.dart';
-
 import '../../../common/widget/text_field/search_textfiled.dart';
 
 class MessagesWidgets extends StatefulWidget {
@@ -19,7 +20,20 @@ class _MessagesWidgetsState extends State<MessagesWidgets> {
   static List<Map<String, dynamic>> users = [];
   final TextEditingController _searchController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseService firebaseService = FirebaseService();
+
   String userName = "";
+
+  @override
+  @override
+  void initState() {
+    super.initState();
+    FirebaseService.db.collection('users').get().then((value) {
+      setState(() {
+        users = value.docs.map((doc) => doc.data()).toList();
+      });
+    });
+  }
 
   void onSearched() async {
     try {
@@ -53,25 +67,39 @@ class _MessagesWidgetsState extends State<MessagesWidgets> {
           ),
           users != null
               ? Expanded(
-                  child: ListView.builder(
-                      itemCount: users.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return MessageTile(
-                          username: users[index]['username'],
-                          onPressed: () {
-                            String cId =
-                                chatRoomId(userName, users[index]['email']);
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_) => ChatWidgets(
-                                      users: users,
-                                      chatRoomId: cId,
-                                      selectedUsername: users[index]
-                                          ['username'],
-                                    )));
-                          },
-                        );
-                      }),
-                )
+                  child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final data = snapshot.data?.docs;
+                      print("data ${data}");
+                      return ListView.builder(
+                          itemCount: users.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return MessageTile(
+                              username: users[index]['username'],
+                              onPressed: () {
+                                String cId =
+                                    chatRoomId(userName, users[index]['email']);
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (_) => ChatWidgets(
+                                          users: users,
+                                          chatRoomId: cId,
+                                          selectedUsername: users[index]
+                                              ['username'],
+                                        )));
+                              },
+                            );
+                          });
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ))
               : Container(),
           // users != null ? MessageTile() : Container(),
         ],
