@@ -17,15 +17,18 @@ import '../../../common/widget/messages/date_label.dart';
 import '../../../common/widget/text_field/message_textfield.dart';
 
 class ChatWidgets extends StatefulWidget {
-  ChatWidgets(
-      {super.key,
-      required this.users,
-      required this.chatRoomId,
-      required this.selectedUsername});
+  ChatWidgets({
+    super.key,
+    required this.users,
+    required this.chatRoomId,
+    required this.selectedUsername,
+    required this.imageUrl,
+  });
 
   final List<Map<String, dynamic>> users;
   final String chatRoomId;
   final String selectedUsername;
+  final String imageUrl;
 
   @override
   State<ChatWidgets> createState() => _ChatWidgetsState();
@@ -142,9 +145,10 @@ class _ChatWidgetsState extends State<ChatWidgets> {
                   const SizedBox(
                     width: 2,
                   ),
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 20,
                     backgroundColor: CustomTheme.primaryColor,
+                    backgroundImage: NetworkImage(widget.imageUrl),
                   ),
                   const SizedBox(
                     width: 12,

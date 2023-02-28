@@ -42,6 +42,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   void initState() {
     _ui = Provider.of<GlobalUIViewModel>(context, listen: false);
     _auth = Provider.of<AuthViewModel>(context, listen: false);
+    NotificationService.initialize();
     super.initState();
   }
 
@@ -60,9 +61,10 @@ class _RegisterWidgetState extends State<RegisterWidget> {
       ))
           .then((value) {
         NotificationService.display(
-          title: "Welcome to this app",
+          title: "Welcome to Forum",
           body:
               "Hello ${_auth.loggedInUser?.username},\n Thank you for registering in this application.",
+          logo: 'assets/images/logo.png',
         );
         Navigator.of(context).pushReplacementNamed("/dashboard");
       }).catchError((e) {

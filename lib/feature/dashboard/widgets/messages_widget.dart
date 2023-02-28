@@ -87,6 +87,7 @@ class _MessagesWidgetsState extends State<MessagesWidgets> {
                                           chatRoomId: cId,
                                           selectedUsername: users[index]
                                               ['username'],
+                                          imageUrl: users[index]['imageUrl'],
                                         )));
                               },
                             );
