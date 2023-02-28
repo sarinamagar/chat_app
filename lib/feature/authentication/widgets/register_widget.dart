@@ -16,6 +16,7 @@ import '../../../model/user_model.dart';
 import '../../../services/local_notification_service.dart';
 import '../../../viewmodels/auth_viewmodel.dart';
 import '../../../viewmodels/global_ui_viewmodel.dart';
+import 'package:uuid/uuid.dart';
 
 class RegisterWidget extends StatefulWidget {
   const RegisterWidget({Key? key}) : super(key: key);
@@ -75,6 +76,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   }
 
   String url = "";
+
   Future<String> takeImageFromCamera() async {
     final image = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -82,7 +84,10 @@ class _RegisterWidgetState extends State<RegisterWidget> {
       maxHeight: 512,
       imageQuality: 75,
     );
-    Reference ref = FirebaseStorage.instance.ref().child("profilepic.jpg");
+
+    Reference ref = FirebaseStorage.instance
+        .ref()
+        .child("profilepics/${Uuid().v4()}.jpg"); // generate unique file name
     await ref.putFile(File(image!.path));
     String _url = await ref.getDownloadURL();
     setState(() {
