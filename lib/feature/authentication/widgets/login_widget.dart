@@ -41,6 +41,7 @@ class _LoginWidgetsState extends State<LoginWidgets> {
           body:
               "Hello ${_authViewModel.loggedInUser?.username},\n Hope you are having a wonderful day.",
         );
+
         Navigator.pushReplacement(context,
             new MaterialPageRoute(builder: (context) => new DashboardScreen()));
         // Navigator.of(context, rootNavigator: true)

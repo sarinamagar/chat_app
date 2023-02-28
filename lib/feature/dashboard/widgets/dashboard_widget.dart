@@ -1,9 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:forum/app/theme.dart';
 import 'package:forum/common/constant/textStyle.dart';
+import 'package:forum/common/widget/buttons/icon_button.dart';
 import 'package:forum/common/widget/navigationBar/bottom_navigation.dart';
+import 'package:forum/feature/authentication/screens/login_screen.dart';
 import 'package:forum/feature/dashboard/screens/channel_screens.dart';
 import 'package:forum/feature/dashboard/screens/messages_screens.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../services/firebase_service.dart';
+import '../../authentication/screens/authentication_screen.dart';
 
 class DashboardWidget extends StatefulWidget {
   const DashboardWidget({Key? key}) : super(key: key);
@@ -13,6 +20,7 @@ class DashboardWidget extends StatefulWidget {
 }
 
 class _DashboardWidgetState extends State<DashboardWidget> {
+  User? user = FirebaseAuth.instance.currentUser;
   final pages = [
     const MessagesScreen(),
     const ChannelScreen(),
@@ -59,6 +67,67 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                     image: AssetImage('assets/images/logo.png'),
                     fit: BoxFit.contain)),
           ),
+        ),
+      ),
+      endDrawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                color: CustomTheme.black,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      height: 80,
+                      width: 100,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/logo.png'),
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  Text(
+                    user?.email ?? "",
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout_outlined),
+              title: const Text('Logout'),
+              onTap: () async {
+                try {
+                  await FirebaseAuth.instance.signOut();
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AuthenticationScreen()),
+                  );
+                } catch (err) {
+                  print('Error logging out: $err');
+                }
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.help),
+              title: const Text('Help'),
+              onTap: () {
+                // handle help button press
+              },
+            ),
+          ],
         ),
       ),
       body: ValueListenableBuilder(

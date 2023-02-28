@@ -50,34 +50,31 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     }
     _ui.loadState(true);
     try {
-      await takeImageFromCamera().then((value) {
-        imageUrl = value;
-        _auth
-            .register(UserModel(
-          email: _emailController.text,
-          password: _passwordController.text,
-          username: _usernameController.text,
-          imageUrl: imageUrl,
-        ))
-            .then((value) {
-          NotificationService.display(
-            title: "Welcome to this app",
-            body:
-                "Hello ${_auth.loggedInUser?.username},\n Thank you for registering in this application.",
-          );
-          Navigator.of(context).pushReplacementNamed("/dashboard");
-        }).catchError((e) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(e.message.toString())));
-        });
+      await _auth
+          .register(UserModel(
+        email: _emailController.text,
+        password: _passwordController.text,
+        username: _usernameController.text,
+        imageUrl: imageUrl,
+      ))
+          .then((value) {
+        NotificationService.display(
+          title: "Welcome to this app",
+          body:
+              "Hello ${_auth.loggedInUser?.username},\n Thank you for registering in this application.",
+        );
+        Navigator.of(context).pushReplacementNamed("/dashboard");
+      }).catchError((e) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.message.toString())));
       });
     } catch (err) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(err.toString())));
+      ScaffoldMessenger.of(context);
     }
     _ui.loadState(false);
   }
 
+  String url = "";
   Future<String> takeImageFromCamera() async {
     final image = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -87,9 +84,11 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     );
     Reference ref = FirebaseStorage.instance.ref().child("profilepic.jpg");
     await ref.putFile(File(image!.path));
-    return ref.getDownloadURL().then(((value) {
-      return value;
-    }));
+    String _url = await ref.getDownloadURL();
+    setState(() {
+      imageUrl = _url;
+    });
+    return _url;
   }
 
   // void _uploadImageFile() {
