@@ -112,6 +112,18 @@ class CustomTextStyle {
     fontWeight: FontWeight.w500,
     fontSize: 13,
   );
+  static const TextStyle name = TextStyle(
+    color: CustomTheme.darkGray,
+    fontFamily: Fonts.quickSand,
+    fontWeight: FontWeight.w500,
+    fontSize: 13,
+  );
+  static const TextStyle name2 = TextStyle(
+    color: CustomTheme.black,
+    fontFamily: Fonts.quickSand,
+    fontWeight: FontWeight.w500,
+    fontSize: 14,
+  );
   static const TextStyle messageHint = TextStyle(
     color: CustomTheme.darkGray,
     fontFamily: Fonts.quickSand,

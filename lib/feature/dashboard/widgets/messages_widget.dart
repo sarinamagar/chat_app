@@ -81,14 +81,17 @@ class _MessagesWidgetsState extends State<MessagesWidgets> {
                               onPressed: () {
                                 String cId =
                                     chatRoomId(userName, users[index]['email']);
-                                Navigator.of(context).push(MaterialPageRoute(
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
                                     builder: (_) => ChatWidgets(
-                                          users: users,
-                                          chatRoomId: cId,
-                                          selectedUsername: users[index]
-                                              ['username'],
-                                          imageUrl: users[index]['imageUrl'],
-                                        )));
+                                      users: users,
+                                      chatRoomId: cId,
+                                      selectedUsername: users[index]
+                                          ['username'],
+                                      imageUrl: users[index]['imageUrl'],
+                                    ),
+                                  ),
+                                );
                               },
                             );
                           });

@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:forum/common/constant/textStyle.dart';
 import 'package:forum/common/widget/buttons/rounded_button.dart';
@@ -7,8 +11,11 @@ import 'package:forum/common/widget/text_field/search_textfiled.dart';
 import 'package:forum/feature/dashboard/screens/dashboard_screen.dart';
 import 'package:forum/feature/groupchat/screens/group_info.dart';
 import 'package:forum/feature/groupchat/widgets/group_info_widget.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../app/theme.dart';
+import '../../../common/widget/buttons/icon_button.dart';
 import '../../../services/firebase_service.dart';
 import '../../dashboard/screens/channel_screens.dart';
 
