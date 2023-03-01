@@ -15,7 +15,7 @@ class NotificationService {
   static void initialize() {
     const InitializationSettings initializationSettings =
         InitializationSettings(
-            android: AndroidInitializationSettings("@mipmap/ic_launcher"),
+            android: AndroidInitializationSettings("@mipmap/launcher_icon"),
             iOS: DarwinInitializationSettings(
                 requestSoundPermission: false,
                 requestBadgePermission: false,

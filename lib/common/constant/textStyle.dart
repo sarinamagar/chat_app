@@ -83,6 +83,12 @@ class CustomTextStyle {
     fontWeight: FontWeight.w500,
     fontSize: 19,
   );
+  static const TextStyle appText3 = TextStyle(
+    color: CustomTheme.primaryColor,
+    fontFamily: Fonts.quickSand,
+    fontWeight: FontWeight.w600,
+    fontSize: 24,
+  );
   static const TextStyle searchText = TextStyle(
     color: CustomTheme.black,
     fontFamily: Fonts.quickSand,
